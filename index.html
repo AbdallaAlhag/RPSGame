@@ -4,10 +4,13 @@
         <meta charset="UTF-8">
         <title>RPS game</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="https://fav.farm/🔥" />
     </head>
         <body>
-            <div class="title">
+            <div class="header">
                 <h3>Rock Paper Scissor</h3>
+            </div>
+            <div class="title">
                 <p>Choose Your Weapon</p>
                 <p>Starting lives: 5</p>
                 <p>First to 0 Loses!</p>
@@ -17,17 +20,25 @@
                 <div id="computer">Computer Hp: 5</div>
             </div>
             <div class="button-container">
-                <button id="rock">Rock</button>
-                <button id="paper">Paper</button>
-                <button id="scissor">Scissor</button>
+                <button id="rock"></button>
+                
+                <button id="paper"></button>
+                <button id="scissor"></button>
+            </div>
+            <div class="button-description-container">
+                <p>Rock</p>
+                <p>Paper</p>
+                <p>Scissor</p>
             </div>
             
             <div class="result-container">
                 <div id="round">Round: </div>
                 <div id="result">Result: </div>
                 <div id="OutCome"></div>
+                <button id="reset">reset</button>
             </div>
                 
+            
             
 
             <script>
@@ -40,6 +51,7 @@
                 var roundDiv = document.getElementById('round');
                 var playerDiv = document.getElementById('player');
                 var computerDiv = document.getElementById('computer');
+                const reset = document.getElementById('reset');
                 
                 let number = 0;
                 let playerLife = 5;
@@ -47,7 +59,7 @@
 
                 function incrementNumber() {
                     number++;
-                    roundDiv.textContent = 'Result: ' + number;
+                    roundDiv.textContent = 'Round: ' + number;
                 }
 
                 function decrementPlayerLife(){
@@ -60,24 +72,38 @@
                     computerDiv.textContent = 'Computer Score: ' + computerLife;
                 }
 
+                
+
+                function gameFunctions(choice) {
+                    if(computerLife === 0) {
+                        alert("You win!");
+                    }
+                    else if(playerLife ===0){
+                        alert("You lose!");
+                    }
+                    else {
+                        let computerSelection = getComputerChoice(); 
+                        playRound(choice,computerSelection);
+                        incrementNumber();
+                    }
+                }
+
                 function game() {
                     rock.addEventListener('click', () => {
-                        let computerSelection = getComputerChoice(); 
-                        playRound('rock',computerSelection);
-                        incrementNumber();
+                        gameFunctions('rock');
                     });
 
                     paper.addEventListener('click', () => {
-                        let computerSelection = getComputerChoice(); 
-                        playRound('paper',computerSelection);
-                        incrementNumber();
+                        gameFunctions('paper');
                     });
 
                     scissor.addEventListener('click', () => {
-                        let computerSelection = getComputerChoice(); 
-                        playRound('scissor',computerSelection);
-                        incrementNumber();  
+                        gameFunctions('scissor');  
                     });
+
+                    reset.addEventListener('click', function() {
+                        location.reload();
+                    })
 
                 }
                 
@@ -104,45 +130,45 @@
                 // and outputs the winner using the player selection vs computer selection
                 function playRound(playerSelection, computerSelection) {
                     if((playerSelection.toLowerCase() === 'rock') && (computerSelection === 'scissor')){
-                        result.textContent = "You win! Rock beats scissors";
+                        result.textContent = "Result: You win! Rock beats scissors";
                         decrementComputerLife();
                     }
                         
                     else if ((playerSelection.toLowerCase() === 'rock') && (computerSelection === 'paper')){
-                        result.textContent = "You Lose! Paper beats rock";
+                        result.textContent = "Result: You Lose! Paper beats rock";
                         decrementPlayerLife();
                     }
                         
                     else if ((playerSelection.toLowerCase() === 'rock') && (computerSelection === 'rock')){
-                        result.textContent = "Tie! Rock equals Rock";
+                        result.textContent = "Result: Tie! Rock equals Rock";
                     }   
                         
                     else if (playerSelection.toLowerCase() === 'scissor' && computerSelection === 'paper'){
-                        result.textContent = "You Win! Scissors beats paper";
+                        result.textContent = "Result: You Win! Scissors beats paper";
                         decrementComputerLife();
                     }
 
                     else if (playerSelection.toLowerCase() === 'scissor' && computerSelection === 'rock'){
-                        result.textContent = "You Lose! Rock beats Scissor";
+                        result.textContent = "Result: You Lose! Rock beats Scissor";
                         decrementPlayerLife();
                     }
 
                     else if (playerSelection.toLowerCase() === 'scissor' && computerSelection === 'scissor'){
-                        result.textContent = "Tie! scissors equals scissors";
+                        result.textContent = "Result: Tie! scissors equals scissors";
                     }
 
                     else if (playerSelection.toLowerCase() === 'paper' && computerSelection === 'scissor'){
-                        result.textContent = "You Lose! Scissor beats paper";
+                        result.textContent = "Result: You Lose! Scissor beats paper";
                         decrementPlayerLife();
                     }
                         
                     else if (playerSelection.toLowerCase() === 'paper' && computerSelection === 'rock'){
-                        result.textContent = "You Win! Paper beats rock";
+                        result.textContent = "Result: You Win! Paper beats rock";
                         decrementComputerLife();
                     }
                         
                     else{
-                        result.textContent = "Tie! Rock equals Rock";
+                        result.textContent = "Result: Tie! Rock equals Rock";
                     }
                 }
 
